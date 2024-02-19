@@ -17,11 +17,9 @@ class Calculator {
     JTextField textField = new JTextField();
     JLabel resultOfCalculation = new JLabel();
 
-    String stringToCalculate = "";
-
     public void calcutaeString() {
         try {
-            double result = CalculateInfix.calculateInfix(stringToCalculate);
+            double result = CalculateInfix.calculateInfix(textField.getText());
         resultOfCalculation.setText(result + "");
         } catch (Exception e) {
             resultOfCalculation.setText("Syntax Error");
@@ -30,21 +28,26 @@ class Calculator {
     }
 
     public void addNumberAndSymbol(char toAdd) throws Exception {
+        if(toAdd == '='){
+            calcutaeString();
+            return;
+        }
         if(toAdd == 'A'){
-            stringToCalculate = "";
-            textField.setText(stringToCalculate);
+            textField.setText("");
             resultOfCalculation.setText("0");
             return;
         }
         if(toAdd == 'B'){
-            if(stringToCalculate.length() == 0) return;
-            stringToCalculate = stringToCalculate.substring(0, stringToCalculate.length() - 1);
-            textField.setText(stringToCalculate);
+            String  text = textField.getText();
+            if(text.length() == 0) return;
+            text = text.substring(0, text.length() - 1);
+            textField.setText(text);
             calcutaeString();
             return;
         }
-        stringToCalculate += toAdd;
-        textField.setText(stringToCalculate);
+        String  text = textField.getText();
+        text += toAdd;
+        textField.setText(text);
         calcutaeString();
     }
 
